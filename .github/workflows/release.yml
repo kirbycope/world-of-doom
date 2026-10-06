@@ -27,8 +27,7 @@ jobs:
       - name: Package and publish
         uses: BigWigsMods/packager@v2
         with:
-          workdir: AddOns/wodoom
-          args: ${{ github.event_name == 'workflow_dispatch' && '-d' || '' }} ${{ vars.CURSEFORGE_PROJECT_ID && format('-p {0}', vars.CURSEFORGE_PROJECT_ID) || '' }}
+          args: -t AddOns/wodoom ${{ github.event_name == 'workflow_dispatch' && '-d' || '' }} ${{ vars.CURSEFORGE_PROJECT_ID && format('-p {0}', vars.CURSEFORGE_PROJECT_ID) || '' }}
 
       - name: Keep the zip from manual runs
         if: github.event_name == 'workflow_dispatch'
