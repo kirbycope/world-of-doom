@@ -24,6 +24,16 @@ jobs:
         with:
           fetch-depth: 0 # the packager reads history for the changelog and version
 
+      # The packager needs the addon folder to be a git checkout, and here it is a subfolder of one.
+      # Give it a throwaway repository with the pushed tag so the version still comes from the tag.
+      - name: Make the addon folder a checkout
+        working-directory: AddOns/wodoom
+        run: |
+          git init -q
+          git -c user.name=ci -c user.email=ci@example.invalid add -A
+          git -c user.name=ci -c user.email=ci@example.invalid commit -qm "$(git -C ../.. log -1 --format=%s)"
+          if [ "${GITHUB_REF_TYPE}" = "tag" ]; then git tag "${GITHUB_REF_NAME}"; fi
+
       - name: Package and publish
         uses: BigWigsMods/packager@v2
         with:
