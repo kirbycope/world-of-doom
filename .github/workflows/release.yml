@@ -45,3 +45,4 @@ jobs:
         with:
           name: wodoom-package
           path: AddOns/wodoom/.release/*.zip
+          include-hidden-files: true
