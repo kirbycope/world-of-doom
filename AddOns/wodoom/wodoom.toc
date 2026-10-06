@@ -1,0 +1,8 @@
+## Interface: 120000
+## Title: WoDoom
+## Notes: DOOM E1M1 with real WAD textures and sprites, drawn as textured column strips. Type /wodoom.
+## Version: 0.1.0
+
+data_level.lua
+data_assets.lua
+wodoom.lua
