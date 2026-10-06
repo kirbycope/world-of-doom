@@ -107,7 +107,7 @@ python wodoom\tools\harness.py 1056 -3616 90 out.png W:60,E:20
 
 ## Releasing
 
-`.github/workflows/release.yml` packages `AddOns/wodoom` with the BigWigs packager and uploads it to CurseForge and a GitHub release when you push a tag such as `wodoom-v1.0.0` (use `-beta` or `-alpha` in the tag for pre-releases). Set the `CF_API_KEY` secret and the `CURSEFORGE_PROJECT_ID` variable in the repository settings first. The generated assets (`tex/`, `flat/`, `spr/`, `snd/`, `music/`, `data_*.lua`) must be committed, since CI can't build them. Running the workflow by hand builds the zip as an artifact without uploading. Check the licensing note below before publishing.
+`.github/workflows/release.yml` packages `AddOns/wodoom` with the BigWigs packager and uploads it to CurseForge and a GitHub release when you push a tag such as `wodoom-v1.0.0` (use `-beta` or `-alpha` in the tag for pre-releases). Set the `CF_API_TOKEN` secret and the `CURSEFORGE_PROJECT_ID` variable in the repository settings first. The generated assets (`tex/`, `flat/`, `spr/`, `snd/`, `music/`, `data_*.lua`) must be committed, since CI can't build them. Running the workflow by hand builds the zip as an artifact without uploading. Check the licensing note below before publishing.
 
 ## Credits and licensing
 
