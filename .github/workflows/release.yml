@@ -1,0 +1,38 @@
+name: Release WoDoom
+
+# Push a tag like wodoom-v1.0.0 to publish. A tag containing "alpha" or "beta" is published as that release type.
+# Setup: add the CF_API_KEY secret (CurseForge API token) and the CURSEFORGE_PROJECT_ID variable
+# (or put `## X-Curse-Project-ID: <id>` in wodoom.toc). The generated tex/, flat/, spr/, snd/, music/ and data_*.lua
+# files must be committed, because CI has no WAD to build them from.
+on:
+  push:
+    tags:
+      - "wodoom-v*"
+  workflow_dispatch: # manual run: builds the zip without uploading
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      CF_API_KEY: ${{ secrets.CF_API_KEY }}
+      GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # the packager reads history for the changelog and version
+
+      - name: Package and publish
+        uses: BigWigsMods/packager@v2
+        with:
+          workdir: wodoom/AddOns/wodoom
+          args: ${{ github.event_name == 'workflow_dispatch' && '-d' || '' }} ${{ vars.CURSEFORGE_PROJECT_ID && format('-p {0}', vars.CURSEFORGE_PROJECT_ID) || '' }}
+
+      - name: Keep the zip from manual runs
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/upload-artifact@v4
+        with:
+          name: wodoom-package
+          path: wodoom/AddOns/wodoom/.release/*.zip

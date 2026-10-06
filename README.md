@@ -2,8 +2,6 @@
 
 DOOM E1M1 (Hangar) as a World of Warcraft addon. The level, textures, sprites and lighting come from the real shareware `doom1.wad`; the renderer and game logic are written from scratch in Lua.
 
-Status: the renderer was confirmed working in the WoW client. Everything added since the last client test (Doom lighting, the `dos` preset, weapon tics, palette flashes, the HU font, death, pause and the menus) has only been checked in an offline Lua 5.1 harness.
-
 ## How it works
 
 WoW addons can't run native code or draw pixels, so WoDoom lets the game's texture system do the drawing:
@@ -71,7 +69,6 @@ You start with the fist and pistol. The shotgun and chaingun are picked up in th
 - E1M1 only. Other maps need the converter run on them plus any new specials.
 - Not reproduced: Doom's exact random-number table (the RNG is Lua's), the full monster pathing of `P_NewChaseDir`, automap, saved games, and the screen-size, mouse and volume sliders (drawn but inactive). The view is 320 columns at best with the 90 degree projection scaled to 640x480; color is shaded per texture strip or floor chunk rather than per pixel from the 8-bit palette.
 - Sprite occlusion only tests solid walls, so a sprite seen through a partly open window may draw slightly wrong.
-- Two things I could not test outside the client: whether WoW honors eight-value texture coordinates on the floor quads and the `"NEAREST"` texture filter. If floors look smeared or skewed, those are the first things to check.
 
 ## Regenerating the generated files
 
@@ -107,6 +104,10 @@ python wodoom\tools\harness.py 1056 -3616 90 out.png W:60,E:20
 | `AddOns/wodoom/tex/`, `flat/`, `spr/` | Generated wall textures, floor and ceiling flats, and sprites (`.tga`). |
 | `AddOns/wodoom/snd/`, `music/` | Generated sound effects (with volume and side variants) and music (`.ogg`). |
 | `tools/` | Converter, offline harness and tests. Its `work/` folder (the WAD, soundfont and FluidSynth, about 48 MB) is git-ignored. |
+
+## Releasing
+
+`.github/workflows/release.yml` packages `AddOns/wodoom` with the BigWigs packager and uploads it to CurseForge and a GitHub release when you push a tag such as `wodoom-v1.0.0` (use `-beta` or `-alpha` in the tag for pre-releases). Set the `CF_API_KEY` secret and the `CURSEFORGE_PROJECT_ID` variable in the repository settings first. The generated assets (`tex/`, `flat/`, `spr/`, `snd/`, `music/`, `data_*.lua`) must be committed, since CI can't build them. Running the workflow by hand builds the zip as an artifact without uploading. Check the licensing note below before publishing.
 
 ## Credits and licensing
 
