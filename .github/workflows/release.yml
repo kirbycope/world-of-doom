@@ -1,7 +1,7 @@
 name: Release WoDoom
 
 # Push a tag like wodoom-v1.0.0 to publish. A tag containing "alpha" or "beta" is published as that release type.
-# Setup: add the CF_API_KEY secret (CurseForge API token) and the CURSEFORGE_PROJECT_ID variable
+# Setup: add the CF_API_TOKEN secret (CurseForge API token) and the CURSEFORGE_PROJECT_ID variable
 # (or put `## X-Curse-Project-ID: <id>` in wodoom.toc). The generated tex/, flat/, spr/, snd/, music/ and data_*.lua
 # files must be committed, because CI has no WAD to build them from.
 on:
@@ -17,7 +17,7 @@ jobs:
   release:
     runs-on: ubuntu-latest
     env:
-      CF_API_KEY: ${{ secrets.CF_API_KEY }}
+      CF_API_KEY: ${{ secrets.CF_API_TOKEN }}
       GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4

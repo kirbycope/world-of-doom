@@ -2,6 +2,7 @@
 ## Title: WoDoom
 ## Notes: DOOM E1M1 with real WAD textures and sprites, drawn as textured column strips. Type /wodoom.
 ## Version: @project-version@
+## X-Curse-Project-ID: 1730713
 
 data_level.lua
 data_assets.lua
